@@ -108,6 +108,7 @@ public class Diffuseur {
         threcv.start();
     }
     public void enregest() {
+        //lancement d'un thread (anonymous class)
         Thread enr = new Thread(){
             public void run(){
                
@@ -115,7 +116,7 @@ public class Diffuseur {
                     Socket sc= new Socket("127.0.0.1",5858);
                     BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(sc.getInputStream()));
                     PrintWriter printWriter=new PrintWriter(new OutputStreamWriter(sc.getOutputStream()));
-                    String msg="REGI diffzizo 225.010.020.030 5151 127.000.000.001 5000\r\n";
+                    String msg="REGI "+ idDiff + " " + addressDiff + " " + portDiff + " 127.000.000.001 "+ port +"\r\n";
                     printWriter.print(msg);
                     printWriter.flush();
                     String res=bufferedReader.readLine();

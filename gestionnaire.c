@@ -19,7 +19,7 @@
 int nbClients=0;
 
 
-//Structure où sauvgarder les diffuseurs enregistrés
+//Structure pour sauvgarder les diffuseurs enregistrés
 struct Diffuseur{
     char id[9]; //id du diffuseur 
     char ip1[16]; //Adresse IPv4 
@@ -142,8 +142,11 @@ void * routine(void *arg){
     
 }
 
-
-
+//la routine responsable de test de l'existence des diffuseurs (diffuseurs actifs)
+void * testDiffActif(){
+    printf("création de ce thread");
+    pthread_exit(NULL);
+}
 
 //le programme principal du serveur
 int main(int argc, char const *argv[])
@@ -193,7 +196,16 @@ int main(int argc, char const *argv[])
   	else
 		printf("Erreur à l'écoute\n");
 
-    //un tableau de threads , ici on va stocker les threads crées
+
+    //création d'un thread pour la vérification de l'existence du diffuseurs (diffuseurs actifs)
+    //i.e. envoie des messages de type RUOK avec une fréquence fixée
+    pthread_t th;
+    if(pthread_create(&th,NULL,testDiffActif,NULL) != 0 ){
+        printf("Erreur dans la création du thread de test actif/non-actif \n");
+    }
+    pthread_join(th,NULL);
+
+    //un tableau de threads , ici on va stocker les threads crées (enregistrement de diffuseurs -REGI- et requetes des clients -ex:LIST- )
     pthread_t threadID[MAX_THREAD];
 
     int i=0;
