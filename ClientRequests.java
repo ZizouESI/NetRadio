@@ -52,7 +52,7 @@ public class ClientRequests implements Runnable{
                     m= m + Standard.restituerMsg(str.substring(19, 159)) + "\n";
                     //System.out.println(m);
                     jTextArea.insert(m,0);
-                    continue;
+                    
                 }else{
                     System.out.println("Erreur dans le message recu !");
                 }

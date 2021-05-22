@@ -41,6 +41,11 @@ public class DiffReceptTCP implements Runnable{
                 System.out.println("Erreur : les espaces!");
                 return false;
             }
+        }else if(msg.length() == 6){
+            if(!msg.substring(0, 4).equals("RUOK")){
+                System.out.println("Erreur : le message ne commence pas par MESS !");
+                return false;
+            }
         }
         return true;
     }
@@ -83,7 +88,12 @@ public class DiffReceptTCP implements Runnable{
                 printWriter.print("ENDM\r\n");
                 printWriter.flush();
             
-            }else{
+            }else if(msg.substring(0, 4).equals("RUOK")){
+                String imok="IMOK\r\n";
+                printWriter.print(imok);
+                printWriter.flush();
+            }
+            else{
                 System.out.println("Message recu :"+msg);
             }
             bufferedReader.close();
